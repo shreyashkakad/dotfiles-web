@@ -3,12 +3,16 @@ import { useEffect, useState } from "react";
 import { collection, onSnapshot } from "firebase/firestore";
 import { fireStore } from "../firebase";
 import { motion, AnimatePresence } from "framer-motion";
+import LeftArrow from "../assets/left-arrow.png";
+import RightArrow from "../assets/right-arrow.png";
 
 
 function Explore() {
     const [users, setUsers] = useState([]);
     const [copiedIndex, setCopiedIndex] = useState(null);
     const [imageIndexes, setImageIndexes] = useState({});
+    const [direction, setDirection] = useState(0);
+
 
     useEffect(() => {
         const unsubscribe = onSnapshot(collection(fireStore, "users"), (snapshot) => {
@@ -17,28 +21,35 @@ function Explore() {
                 ...doc.data(),
             }));
             setUsers(userList);
+
+            const initialIndexes = {};
+            userList.forEach(user => {
+                initialIndexes[user.id] = 0;
+            });
+            setImageIndexes(initialIndexes);
         });
 
         return () => unsubscribe();
     }, []);
 
-    useEffect(() => {
-        const interval = setInterval(() => {
-            setImageIndexes((prevIndexes) => {
-                const updated = {};
-                users.forEach((user) => {
-                    const total = user.imageURLs?.length || 0;
-                    if (total > 0) {
-                        const current = prevIndexes[user.id] || 0;
-                        updated[user.id] = (current + 1) % total;
-                    }
-                });
-                return updated;
-            });
-        }, 6000);
 
-        return () => clearInterval(interval);
-    }, [users]);
+    const handleNextImage = (userId, total) => {
+        setDirection(1);
+        setImageIndexes((prev) => ({
+            ...prev,
+            [userId]: (prev[userId] + 1) % total,
+        }));
+    };
+
+    const handlePrevImage = (userId, total) => {
+        setDirection(-1);
+        setImageIndexes((prev) => ({
+            ...prev,
+            [userId]: (prev[userId] - 1 + total) % total,
+        }));
+    };
+
+
 
     return (
         <>
@@ -57,16 +68,31 @@ function Explore() {
                                         key={imageList[currentImageIndex]}
                                         src={imageList[currentImageIndex]}
                                         alt={`user-${currentImageIndex}`}
-                                        initial={{ x: 300, opacity: 0 }}
+                                        custom={direction}
+                                        initial={(dir) => ({ x: dir > 0 ? 300 : -300, opacity: 0 })}
                                         animate={{ x: 0, opacity: 1 }}
-                                        exit={{ x: -300, opacity: 0 }}
+                                        exit={(dir) => ({ x: dir > 0 ? -300 : 300, opacity: 0 })}
                                         transition={{
                                             x: { type: "spring", stiffness: 300, damping: 30 },
-                                            opacity: { duration: 0.2 }
+                                            opacity: { duration: 0.2 },
                                         }}
                                         className="absolute top-0 left-0 w-full h-full object-contain rounded-md"
                                     />
                                 </AnimatePresence>
+
+                                <button
+                                    onClick={() => handlePrevImage(user.id, imageList.length)}
+                                    className="absolute top-1/2 left-4 -translate-y-1/2 bg-black/30 text-white px-2 py-2 rounded-full hover:bg-black/70 z-10 hover:cursor-pointer"
+                                >
+                                    <img src={LeftArrow} alt="Left-arrow-png" className="h-[20x] w-[15px]"/>
+                                </button>
+
+                                <button
+                                    onClick={() => handleNextImage(user.id, imageList.length)}
+                                    className="absolute top-1/2 right-4 -translate-y-1/2 bg-black/30 text-white px-2 py-2 rounded-full hover:bg-black/70 z-10 hover:cursor-pointer"
+                                >
+                                    <img src={RightArrow} alt="Left-arrow-png" className="h-[20x] w-[15px]"/>
+                                </button>
                             </div>
 
 
