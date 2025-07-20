@@ -54,44 +54,45 @@ function Explore() {
     return (
         <>
             <Navbar />
-            <div className="flex flex-col items-center justify-center mt-[3%]">
+            <div className="flex flex-col items-center justify-center mt-[3%] max-md:ml-[1%]">
                 {users.map((user, index) => {
                     const imageList = user.imageURLs || [];
                     const currentImageIndex = imageIndexes[user.id] || 0;
 
                     return (
-                        <div key={user.id} className="bg-[#2A2A2E33] w-[750px] p-5 flex flex-col rounded-md text-[#D1D5DB] mb-[4%] ">
+                        <div key={user.id} className="bg-[#2A2A2E33] w-[750px] max-md:w-[350px] p-5 flex flex-col rounded-md text-[#D1D5DB] mb-[4%] ">
 
-                            <div className="image-div relative w-full h-[450px] overflow-hidden rounded-md">
+                            <div className="image-div relative w-full h-[450px] max-md:h-[225px] overflow-hidden rounded-md">
                                 <AnimatePresence mode="wait" initial={false}>
                                     <motion.img
                                         key={imageList[currentImageIndex]}
                                         src={imageList[currentImageIndex]}
                                         alt={`user-${currentImageIndex}`}
                                         custom={direction}
-                                        initial={(dir) => ({ x: dir > 0 ? 300 : -300, opacity: 0 })}
+                                        initial={(dir) => ({ x: dir > 0 ? 100 : -100, opacity: 0 })}
                                         animate={{ x: 0, opacity: 1 }}
-                                        exit={(dir) => ({ x: dir > 0 ? -300 : 300, opacity: 0 })}
+                                        exit={(dir) => ({ x: dir > 0 ? -100 : 100, opacity: 0 })}
                                         transition={{
-                                            x: { type: "spring", stiffness: 300, damping: 30 },
-                                            opacity: { duration: 0.2 },
+                                            x: { type: "tween", duration: 0.2, ease: "easeOut" },
+                                            opacity: { duration: 0.15 }
                                         }}
                                         className="absolute top-0 left-0 w-full h-full object-contain rounded-md"
                                     />
                                 </AnimatePresence>
 
+
                                 <button
                                     onClick={() => handlePrevImage(user.id, imageList.length)}
                                     className="absolute top-1/2 left-4 -translate-y-1/2 bg-black/30 text-white px-2 py-2 rounded-full hover:bg-black/70 z-10 hover:cursor-pointer"
                                 >
-                                    <img src={LeftArrow} alt="Left-arrow-png" className="h-[20x] w-[15px]"/>
+                                    <img src={LeftArrow} alt="Left-arrow-png" className="h-[20x] w-[15px]" />
                                 </button>
 
                                 <button
                                     onClick={() => handleNextImage(user.id, imageList.length)}
                                     className="absolute top-1/2 right-4 -translate-y-1/2 bg-black/30 text-white px-2 py-2 rounded-full hover:bg-black/70 z-10 hover:cursor-pointer"
                                 >
-                                    <img src={RightArrow} alt="Left-arrow-png" className="h-[20x] w-[15px]"/>
+                                    <img src={RightArrow} alt="Left-arrow-png" className="h-[20x] w-[15px]" />
                                 </button>
                             </div>
 
@@ -109,10 +110,10 @@ function Explore() {
                             <div className="github-div flex flex-col mt-[2%] inter-bold text-[14px] ml-[2px]">
                                 <p className="mb-[2px]">Github Repo Link: </p>
 
-                                <div className="link-div flex mt-2 justify-between">
-                                    <p className="mt-[2px] bg-[#1F1F23CC] pl-4 pr-4 p-1 rounded-sm inter-light">{user.github}</p>
+                                <div className="link-div flex mt-2 justify-between max-md:flex-col">
+                                    <p className="mt-[2px] bg-[#1F1F23CC] pl-4 pr-4 p-1 rounded-sm inter-light max-md:overflow-hidden">{user.github}</p>
 
-                                    <div className="buttons-div flex gap-4">
+                                    <div className="buttons-div flex gap-4 max-md:mt-2">
                                         <button
                                             onClick={() => {
                                                 navigator.clipboard.writeText(user.github)

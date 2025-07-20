@@ -14,6 +14,16 @@ function Upload() {
         github: "",
     })
 
+    const isValidURL = (url) => {
+        try {
+            new URL(url);
+            return true;
+        } catch (err) {
+            return false;
+        }
+    };
+
+
     //putting images into an array
     const handleImageUpload = (e) => {
         const selectedFiles = Array.from(e.target.files);
@@ -30,7 +40,12 @@ function Upload() {
         //whole form submit
         e.preventDefault();
         setIsSubmitting(true);
-
+        
+        if (!isValidURL(formData.github) || !formData.github.includes("github.com")) {
+            alert("Please enter a valid GitHub repository link!");
+            setIsSubmitting(false);
+            return;
+        }
 
         try {
 
@@ -84,11 +99,11 @@ function Upload() {
 
     //storing input fields data into formData
     const handleChange = (e) => {
+
         setFormData({
             ...formData,
             [e.target.name]: e.target.value
         });
-
     }
 
     const isFormValid = () => {
