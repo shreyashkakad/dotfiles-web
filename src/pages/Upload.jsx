@@ -41,8 +41,8 @@ function Upload() {
         e.preventDefault();
         setIsSubmitting(true);
         
-        if (!isValidURL(formData.github) || !formData.github.includes("github.com")) {
-            alert("Please enter a valid GitHub repository link!");
+        if (!isValidURL(formData.github) || !formData.github.includes("https://")) {
+            alert("Please enter a valid link!");
             setIsSubmitting(false);
             return;
         }

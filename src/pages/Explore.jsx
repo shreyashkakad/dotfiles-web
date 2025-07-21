@@ -6,9 +6,10 @@ import { motion, AnimatePresence } from "framer-motion";
 import LeftArrow from "../assets/left-arrow.png";
 import RightArrow from "../assets/right-arrow.png";
 
-
 function Explore() {
     const [users, setUsers] = useState([]);
+    const [filteredUsers, setFilteredUsers] = useState([]);
+    const [searchInput, setSearchInput] = useState("");
     const [copiedIndex, setCopiedIndex] = useState(null);
     const [imageIndexes, setImageIndexes] = useState({});
     const [direction, setDirection] = useState(0);
@@ -21,7 +22,7 @@ function Explore() {
                 ...doc.data(),
             }));
             setUsers(userList);
-
+            setFilteredUsers(userList);
             const initialIndexes = {};
             userList.forEach(user => {
                 initialIndexes[user.id] = 0;
@@ -31,6 +32,32 @@ function Explore() {
 
         return () => unsubscribe();
     }, []);
+
+    useEffect(() => {
+        const input = searchInput.trim().toLowerCase();
+        const terms = input.split(/\s+/);
+
+        if (!input) {
+            setFilteredUsers(users);
+        } else {
+            const filtered = users.filter(user => {
+                const tags = [
+                    user.os,
+                    user.wm,
+                    ...(user?.tags || [])
+                ]
+                    .filter(Boolean)
+                    .map(tag => tag.toLowerCase());
+
+                return terms.every(term =>
+                    tags.some(tag => tag.includes(term))
+                );
+            });
+
+            setFilteredUsers(filtered);
+        }
+    }, [searchInput, users]);
+
 
 
     const handleNextImage = (userId, total) => {
@@ -49,19 +76,29 @@ function Explore() {
         }));
     };
 
-
-
     return (
         <>
             <Navbar />
-            <div className="flex flex-col items-center justify-center mt-[3%] max-md:ml-[1%]">
-                {users.map((user, index) => {
+            <div className="flex flex-col items-center justify-center mt-[3%] max-md:ml-[%]">
+                <input
+                    type="text"
+                    placeholder="Search by tags"
+                    value={searchInput}
+                    onChange={(e) => setSearchInput(e.target.value)}
+                    className="mb-5 max-md:mb-3 pt-3 pb-3 pl-4 rounded-sm bg-[#1F1F23CC] text-white w-[750px] max-md:w-[340px] max-md:mt-[5px] text-sm inter-light outline-none focus:outline-none"
+                />
+
+                {filteredUsers.length === 0 && (
+                    <div className="text-white text-lg inter-light items-center justify-center">No results found!</div>
+                )}
+
+
+                {filteredUsers.map((user, index) => {
                     const imageList = user.imageURLs || [];
                     const currentImageIndex = imageIndexes[user.id] || 0;
 
                     return (
-                        <div key={user.id} className="bg-[#2A2A2E33] w-[750px] max-md:w-[350px] p-5 flex flex-col rounded-md text-[#D1D5DB] mb-[4%] ">
-
+                        <div key={user.id} className="bg-[#2A2A2E33] w-[750px] max-md:w-[340px] p-5 flex flex-col rounded-md text-[#D1D5DB] mb-[4%] ">
                             <div className="image-div relative w-full h-[450px] max-md:h-[225px] overflow-hidden rounded-md">
                                 <AnimatePresence mode="wait" initial={false}>
                                     <motion.img
@@ -80,7 +117,6 @@ function Explore() {
                                     />
                                 </AnimatePresence>
 
-
                                 <button
                                     onClick={() => handlePrevImage(user.id, imageList.length)}
                                     className="absolute top-1/2 left-4 -translate-y-1/2 bg-black/30 text-white px-2 py-2 rounded-full hover:bg-black/70 z-10 hover:cursor-pointer"
@@ -94,8 +130,8 @@ function Explore() {
                                 >
                                     <img src={RightArrow} alt="Left-arrow-png" className="h-[20x] w-[15px]" />
                                 </button>
-                            </div>
 
+                            </div>
 
                             <div className="tags-div flex gap-4 justify-start mt-[1.3%] ml-[2px]">
                                 <p className="pl-2 pr-2 bg-[#FFFFFFCC] inter-bold text-[14px] text-black rounded-sm">{user.os}</p>
