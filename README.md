@@ -1,35 +1,12 @@
-# dotfilesweb
+# dotfiles-web
 
-A simple site to explore, share, and flex your dotfiles.
+Dotfiles Web is a lightweight React app for sharing dotfiles online. It’s simple, fast, and built for developers who want to upload and share their configs without extra setup or clutter.
 
-Upload screenshots of your riced desktop, add tags (like your window manager or OS), link your GitHub repo, and share your setup. No bloat. Just configs that actually look good.
+## Homepage
+![Homepage Screenshot](https://i.ibb.co/4ZfXrskz/screenshot-2025-11-12-11-48-56.png)
 
----
+## Explore Setup's
+![Explore Setup Screenshot](https://i.ibb.co/qYjb1pms/screenshot-2025-11-12-11-49-35.png)
 
-## 🚀 Features
-
-- Upload 2–3 screenshots of your setup
-- Add tags like `wm: i3`, `os: arch`, 
-- Drop a description and a GitHub link to your dotfiles repo
-- Browse other setups and get inspired
-- No login, no gatekeeping
-
----
-
-## 🛠️ Built With
-
-- **React + Vite**
-- **Firebase** for real-time user data storage
-- **Cloudinary** for external image hosting
-- **Framer Motion** for smooth UI animations
-- **TailwindCSS** for styling
-
----
-
-## 📦 Local Development
-
-```bash
-git clone https://github.com/shreyash0x3/dotfiles-web.git
-cd dotfiles-web
-npm install
-npm run dev
+## Upload Your Dotfiles
+![Upload Screenshot](https://i.ibb.co/7tG3PFhQ/screenshot-2025-11-12-11-50-01.png)
