@@ -11,6 +11,29 @@ Dotfiles Web is a lightweight React app for sharing dotfiles online. It’s simp
 ## Upload Your Dotfiles
 ![Upload Screenshot](https://i.ibb.co/7tG3PFhQ/screenshot-2025-11-12-11-50-01.png)
 
+## Getting Started
+
+Clone the repo and install dependencies:
+
+```bash
+git clone https://github.com/shreyashkakad/dotfiles-web.git
+cd dotfiles-web
+npm install
+```
+
+This project uses Firebase, so you'll need a `.env` file in the project root with your own Firebase project's config. Copy the example file and fill in your values:
+
+```bash
+cp .env.example .env
+```
+
+You can find these values in the Firebase console under **Project Settings → General → Your apps**.
+
+Then start the dev server:
+
+```bash
+npm run dev
+```
 
 ## Design & Structural Decisions
 
