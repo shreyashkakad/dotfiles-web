@@ -19,7 +19,7 @@ function Contact() {
                                 whileHover={{ scale: 1.1 }}
                                 className="hover:mix-blend-luminosity mix-blend-luminosity"
                             >
-                                <a href="https://github.com/shreyash0x3/dotfiles-web" target="_blank" className="flex items-center bg-[#4B454533] rounded-[6px] px-4 hover:bg-[#4B4545] transition-all duration-300 ease-in-out">
+                                <a href="https://github.com/shreyashkakad/dotfiles-web" target="_blank" className="flex items-center bg-[#4B454533] rounded-[6px] px-4 hover:bg-[#4B4545] transition-all duration-300 ease-in-out">
                                     <img src={github} alt="github-icon" className="h-[43px] w-[43px] p-1" />
                                     <p className="inter-bold ml-1 pr-3 text-[20px]">Github</p>
                                 </a>
@@ -29,7 +29,7 @@ function Contact() {
                                 whileHover={{ scale: 1.1 }}
                                 className="hover:mix-blend-luminosity mix-blend-luminosity"
                             >
-                                <a href="https://x.com/shreyash0x3" target="_blank" className="flex items-center bg-[#4B454533] rounded-[6px] px-4 hover:bg-[#4B4545] transition-all duration-300 ease-in-out">
+                                <a href="https://x.com/shreyash_039" target="_blank" className="flex items-center bg-[#4B454533] rounded-[6px] px-4 hover:bg-[#4B4545] transition-all duration-300 ease-in-out">
                                     <img src={twitter} alt="github-icon" className="h-[45px] w-[45px]" />
                                     <p className="inter-bold ml-1 pr-3 text-[20px]">Twitter</p>
                                 </a>
@@ -39,7 +39,7 @@ function Contact() {
                                 whileHover={{ scale: 1.1 }}
                                 className="hover:mix-blend-luminosity mix-blend-luminosity"
                             >
-                                <a href="mailto:shreyashkakad03@gmail.com" className="flex items-center bg-[#4B454533] rounded-[6px] px-4 hover:bg-[#4B4545] transition-all duration-300 ease-in-out">
+                                <a href="mailto:shreyashvkakad@gmail.com" className="flex items-center bg-[#4B454533] rounded-[6px] px-4 hover:bg-[#4B4545] transition-all duration-300 ease-in-out">
                                     <img src={email} alt="github-icon" className="h-[45px] w-[45px]" />
                                     <p className="inter-bold ml-1 pr-3 text-[20px]">Email</p>
                                 </a>
